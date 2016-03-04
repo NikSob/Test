@@ -23,7 +23,7 @@ Function:
    INC C
    INC D
    CMP B, [C] 
-   JNZ Function   ;Задание 2.4
+   JNZ Function   ;Задание 2.4 
    POP A
    POP B
    Add A,B        ;Задание 2.3
