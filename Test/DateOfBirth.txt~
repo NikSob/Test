@@ -13,7 +13,7 @@ start:
    MOV C, Write 
    MOV D, 232
    PUSH B             
-   PUSH A             ;Задание 2.2 
+   PUSH A             ;Задание 2.2
    MOV B,0
 
 
