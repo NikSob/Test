@@ -1,0 +1,23 @@
+JMP start
+
+
+Write: 
+     DB "22/11"
+     DB 0
+
+  
+start:
+
+         
+   MOV C, Write 
+   MOV D, 232
+
+
+Function:
+   MOV A, [C]
+   MOV [D], A
+   INC C
+   INC D
+   CMP B, [C]         
+   JNZ Function
+ 
