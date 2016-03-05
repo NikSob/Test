@@ -1,0 +1,16 @@
+JMP start
+
+
+Write: 
+     DB 22
+     DB 11
+
+  
+start:
+   MOV C, Write 
+
+Function:
+   MOV A, [C]
+   INC C
+   MOV B, [C]
+   ADD A,B
