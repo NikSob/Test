@@ -1,5 +1,123 @@
-JMP start
+   MOV A, 0   ;Число на входе
+   MOV B,A    
+   CMP A, 0
+   JZ ZERO
+   compare:
+   PUSH A  
+   CMP A, 6
+   JAE writeStop
+   MOV D, 232
+   ADD B, 48
+   MOV [D], B
+   MOV B,A
+   
 
+PrintOperation:
+  MOV D, 233
+  MOV [D], 33
+  INC D
+  MOV [D], 61
+  MOV C, 49
+
+Numbers:
+  INC D
+  MOV [D], C
+  INC C
+  INC D
+  MOV [D], 42
+  DEC A
+  CMP A,0
+  JA Numbers
+  MOV [D], 61
+  POP A
+  
+
+ 
+multi:
+  DEC B
+  CMP B,0
+  JBE printAns
+  MUL B
+  JMP multi  
+
+ZERO:
+  MOV A,1
+  JMP compare
+ 
+printAns:
+ MOV B,A
+
+hundred:
+ DIV 100
+ PUSH A
+ MUL 100
+ SUB B,A
+ MOV A,B
+ DIV 10
+ PUSH A
+ MUL 10
+ SUB B,A
+ MOV A,B
+ 
+one:
+
+ MOV D,B
+ POP A
+ MOV C,A
+ POP A
+ MOV B,A
+ MOV A,D
+ PUSH A
+ MOV A,C
+ PUSH A
+ MOV A,B
+ MOV B,253
+ 
+
+writeAns:
+ CMP A,0
+ JNZ next1		
+
+
+out1:
+ INC B
+ POP A
+ CMP A,0
+ JNZ next1
+
+out2:
+ INC B
+ POP A
+ 
+
+next1:
+ MOV D,A
+ MOV A,0
+ JMP cmpD
+
+next2:
+ POP A
+ MOV D,A
+ MOV A,0
+
+cmpD: 
+ CMP D,A
+ JZ output
+ INC A
+ JMP cmpD
+
+output:
+  ADD A, 48
+  MOV [B],A
+ INC B
+ CMP B,0
+ JZ END
+ CMP B,255
+JBE next2
+ HLT
+
+END:
+ HLT
 
 stop:
   DB "ERROR!"
@@ -16,196 +134,9 @@ printERROR:
   JNZ printERROR
   HLT
 
-
-
-go:
-  CMP A,0
-  JE ZERO
-  PrintOperation:
-  MOV B,A
-  
-
-multi:
-  DEC B
-  CMP B,0
-  JBE printAns
-  MUL B
-  JA multi
-
-
-printAns:
- MOV B,A
-
-
-hundred:
- DIV 100
- PUSH A
- MUL 100
- SUB B,A
- 
- ten:
- MOV A,B
- 
-
- tendiv:
- DIV 10
- PUSH A
- MUL 10
- SUB B,A
- MOV A,B
- PUSH A
- 
-one:
- POP A
- MOV D,A
- POP A
- MOV C,A
- POP A
- MOV B,A
- MOV A,D
- PUSH A
- MOV A,C
- PUSH A
- MOV A,B
- PUSH A
- MOV B,253
- 
-
-writeAns:
- POP A
- CMP A,0
- JZ out1
-JMP next1
-
-out1:
- INC B
- POP A
- CMP A,0
- JZ out2
- JMP next1
-
-
-out2:
- INC B
- POP A
- 
- 
-
-
-next1:
- MOV D,A
- MOV A,0
- MOV C,[writeNum]
- JMP cmpD
-
-next2:
- POP A
- MOV D,A
- MOV A,0
- MOV C,[writeNum]
-
-cmpD: 
- CMP D,A
- JZ output
- INC A
- INC C
- CMP D,D
- JZ cmpD
- RET
-
-output:
-  MOV A,C
-  MOV [B],A
- INC B
- CMP B,0
- JZ END
- CMP B,255
-JBE next2
- HLT
-
-END:
- HLT
-
-
- writeNum:
- DB "0123456789"
- DB 0
-
-
 ZERO:
   MOV A,1
-  CALL compare
- 
+  JMP compare
 
-compare:
-   CMP A, 6
-   JAE writeStop
-   CALL PrintWay
-   JB go
-
-start:
-   MOV A, 3          ;Число на входе
-   CMP A, 0
-   JB writeStop
-   JAE  compare
-
-PrintWay:
-  MOV B,0
-  MOV D, 232
-  MOV C, writeNum
-  PUSH A
-  CMP A, B
-  JZ PrintFirst
-  INC B
-  INC C
-  CMP B,B
-  JZ PrintWay
-
-PrintFirst:
-  MOV A, [C]
-  MOV [D], A
-  RET
-
-
-PrintOperation:
-  MOV D, 233
-  MOV C, PrSign1
-  CALL Printer
-  INC D
-  MOV C, PrSign2
-  CALL Printer
-  POP A
-
-Numbers:
-  INC D
-  MOV C, Array
-  MOV [D], C
-  INC D
-  MOV B, PrSign3
-  MOV [D], B
-  INC A
-  CMP A,6
-  JB Numbers
-  MOV B, PrSign2
-  MOV [D], B
-  RET
-
-
-Printer:
-  MOV B, [C]
-  MOV [D], B
-  RET
-  
-PrSign1:
-  DB "!"
-
- PrSign2:
-  DB "="
-
- PrSign3:
-  DB "*"
-
-Array:
- DB "12345"
 
 
