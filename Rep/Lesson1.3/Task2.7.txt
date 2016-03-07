@@ -134,9 +134,5 @@ printERROR:
   JNZ printERROR
   HLT
 
-ZERO:
-  MOV A,1
-  JMP compare
-
 
 

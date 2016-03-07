@@ -1,8 +1,6 @@
-JMP start
-
-
-print:
- MOV B,A
+MOV A, 3       ;Число на входе
+ MOV B,A    
+CALL hundred   ;Вызываем функцию
 
 
 hundred:
@@ -10,22 +8,16 @@ hundred:
  PUSH A
  MUL 100
  SUB B,A
- 
- ten:
  MOV A,B
- 
-
- tendiv:
  DIV 10
  PUSH A
  MUL 10
  SUB B,A
  MOV A,B
- PUSH A
  
 one:
- POP A
- MOV D,A
+
+ MOV D,B
  POP A
  MOV C,A
  POP A
@@ -35,54 +27,45 @@ one:
  MOV A,C
  PUSH A
  MOV A,B
- PUSH A
  MOV B,253
  
 
 writeAns:
- POP A
  CMP A,0
- JZ out1
-JMP next1
+ JNZ next1		
+
 
 out1:
  INC B
  POP A
  CMP A,0
- JZ out2
- JMP next1
-
+ JNZ next1
 
 out2:
  INC B
  POP A
  
- 
-
 
 next1:
  MOV D,A
  MOV A,0
- MOV C,[writeNum]
  JMP cmpD
 
 next2:
  POP A
  MOV D,A
  MOV A,0
- MOV C,[writeNum]
 
 cmpD: 
  CMP D,A
  JZ output
  INC A
- INC C
- CMP D,D
- JZ cmpD
- RET
+ JMP cmpD
+RET			;выходим из функции
+
 
 output:
-  MOV A,C
+  ADD A, 48
   MOV [B],A
  INC B
  CMP B,0
@@ -93,17 +76,4 @@ JBE next2
 
 END:
  HLT
-
-
- writeNum:
- DB "0123456789"
- DB 0
-
-
-
-start:
-   MOV A, 0        ;Число на входе
-  JMP print
-   
-
 
