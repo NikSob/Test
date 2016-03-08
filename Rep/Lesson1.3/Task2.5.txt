@@ -1,5 +1,5 @@
-MOV A, 3       ;Число на входе
- MOV B,A    
+MOV A, 27       ;Число на входе
+MOV B,A    
 CALL hundred   ;Вызываем функцию
 
 
@@ -32,37 +32,23 @@ one:
 
 writeAns:
  CMP A,0
- JNZ next1		
+ JNZ output	
 
 
 out1:
  INC B
  POP A
  CMP A,0
- JNZ next1
+ JNZ output
 
 out2:
  INC B
  POP A
- 
-
-next1:
- MOV D,A
- MOV A,0
- JMP cmpD
+ JMP output
 
 next2:
  POP A
- MOV D,A
- MOV A,0
-
-cmpD: 
- CMP D,A
- JZ output
- INC A
- JMP cmpD
-RET			;выходим из функции
-
+ 
 
 output:
   ADD A, 48
