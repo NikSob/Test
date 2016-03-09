@@ -1,5 +1,5 @@
  MOV A, 0          ;Число на входе
-CALL factorial     ;Вызываем подфункцию
+CALL factorial     ;Вызываем подпрограмму
 HLT
 factorial:
    CMP A, 0
@@ -93,7 +93,7 @@ output:
  CMP B,255
 JBE next2
  END:
- RET 			;Выход из подфункции
+ RET 			;Выход из подпрограммы
 
 
 

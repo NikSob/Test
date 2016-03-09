@@ -1,6 +1,6 @@
 MOV A, 0       ;Число на входе
     
-CALL hundred   ;Вызываем подфункцию
+CALL hundred   ;Вызываем подпрограмму
 HLT
 
 hundred:
@@ -59,4 +59,4 @@ output:
  CMP B,255
 JBE next2
  END:
- RET		;выход из подфункции
+ RET		;выход из подпрограммы
