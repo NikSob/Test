@@ -1,15 +1,16 @@
-MOV A, 3   ;Число на входе
-   MOV B,A    
+ MOV A, 0          ;Число на входе
+CALL factorial     ;Вызываем подфункцию
+HLT
+factorial:
    CMP A, 0
    JZ ZERO
-   compare:
-   PUSH A  
    CMP A, 6
    JAE writeStop
-
-   MOV B,A
-
  
+null:  
+ MOV B,A  
+PUSH A 
+  
 multi:
   DEC B
   CMP B,0
@@ -17,6 +18,10 @@ multi:
   MUL B
   JMP multi  
 
+ZERO:
+  MOV A,1
+  JMP null
+ 
 printAns:
  MOV B,A
 
@@ -87,10 +92,10 @@ output:
  JZ END
  CMP B,255
 JBE next2
- HLT
+ END:
+ RET 			;Выход из подфункции
 
-END:
- HLT
+
 
 stop:
   DB "ERROR!"
@@ -105,11 +110,5 @@ printERROR:
   INC D
   CMP B, [C]   
   JNZ printERROR
-  HLT
-
-ZERO:
-  MOV A,1
-  JMP compare
-   
-
+ JMP END
    

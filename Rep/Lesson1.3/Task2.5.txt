@@ -1,9 +1,10 @@
-MOV A, 27       ;Число на входе
-MOV B,A    
-CALL hundred   ;Вызываем функцию
-
+MOV A, 0       ;Число на входе
+    
+CALL hundred   ;Вызываем подфункцию
+HLT
 
 hundred:
+ MOV B,A
  DIV 100
  PUSH A
  MUL 100
@@ -49,7 +50,6 @@ out2:
 next2:
  POP A
  
-
 output:
   ADD A, 48
   MOV [B],A
@@ -58,8 +58,5 @@ output:
  JZ END
  CMP B,255
 JBE next2
- HLT
-
-END:
- HLT
-
+ END:
+ RET		;выход из подфункции
