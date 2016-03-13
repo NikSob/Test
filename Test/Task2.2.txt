@@ -1,5 +1,0 @@
-
-   MOV A, 22
-   MOV B, 11      
-   PUSH B             
-   PUSH A          
