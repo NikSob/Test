@@ -1,70 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#define LIM 40
-// #define MAX 1000
-int i =0;//, m=0;
+int main ()
+{	
+	int i, j, n = 1, *m, t = 0;
+	char string[1024];
+	char **words;
+	char *place_for_word;
+	FILE *first;
+	FILE *second;
+	first=fopen("Input.txt","r");
+	second=fopen("Output.txt","w");
+	fscanf(first,"%s",string);
+	words = (char**)malloc( sizeof(char*));
+	words[0] = (char*)malloc( sizeof(char) * strlen(string) + 1);
+	strcpy(words[0], string);
+	m = (int*)malloc(sizeof(int));
+	m[0] = 1;
+	while (fscanf(first,"%s",string) !=EOF)
+	{	
+		for(i = 0; i < n; ++i)
+		{   
 
-int main ()//int argc, char *argv[]) 
-{
-	FILE *fp;
-	int g,k,l,z=0, a;
-	// if (argc !=2) 
-	// {
-	// 	printf("Использование: %s\n", argv[0]);
-	// }
-	if ((fp=fopen("source.txt", "r"))==NULL) 
-	{
-		printf("Не удаётся открыть \n");
-		exit(1);
-	}
-	char empty[LIM];
-	while (fscanf(fp, "%s", empty)!=EOF) 
-	{
-		i++;
-	}
-	char words[i][LIM];
-	while (fscanf(fp, "%s", words[z])!=EOF) 
-	{
-		for (g = 0; g != '\0'; g++)
-		{
-			if (isalnum(words[z][g]) == 0 && words[z][g] != '('  && words[z][g] != '{'  && words[z][g] != '"' && words[z][g] != '[')
-				words[z][g]='\0';
-		}
-		z++;
-	}
-	fclose(fp);
-	// l = i;
-	int nums[i];
-	for (a = 0; a<=i; a++)
-		nums[a]=0;
-	for ( g = 0; g<i; g++)
-	{
-		for ( k = g+1; k<i; k++)
-		{
-			if(strcmp(words[g], words[k])!=0 && nums[g]>=0)
+			if(strcmp(words[i],string) == 0)
 			{
-				nums[g]+=1;
-				nums[k]-=1;
+				m[i]++;
+				t = 1;
 			}
 		}
-	}
-	if((fp=fopen("results.txt", "w"))==NULL) 
-	{
-		printf("Не удаётся открыть results.txt\n");
-		exit(1);
-	}
-	for (g=i; g>=0; g--)
-	{
-		for (k=0; k<i; k++)
+		if(!t)
 		{
-			if(nums[k]==g)
+			n++;
+			words = (char**)realloc(words, n * sizeof(char*));
+			words[n-1] = (char*)malloc(sizeof(char) * strlen(string) + 1);
+			strcpy(words[n-1], string);
+			m = (int*)realloc(m, sizeof(int) * n);
+			m[n-1] = 1;
+		}
+	t = 0;
+	}
+	fprintf(second,"Введёные вами слова::\n\n");
+	for (j=0; j<=n-1;j++)
+	{
+		for (i=0;i<n-j-1;i++)
+		{
+			while (m[i] > m[i+1])
 			{
-				fprintf(fp, "one two %s 	-	 %d times\n", words[i], g+1);
+				place_for_word = words[i]; 
+				int place = m[i];
+				m[i]=m[i+1];
+				words[i]=words[i+1];
+				words[i+1]=place_for_word;
+				m[i+1] = place;	
 			}
 		}
+	fprintf(second,"%s 		-		%d\n",words[i], m[i]);
 	}
-	fclose(fp);
-	return 0;
+fclose(first);
+fclose(second);
+return 0;
 }
