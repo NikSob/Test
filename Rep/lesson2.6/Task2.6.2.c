@@ -14,7 +14,7 @@ int main ()
         fread(&letter, 1, 1, first);
         if(letter != '\n') 
         {
-            i = 6? i : 0;
+            i = (i == 6) ? i : 0;
             letter^=key[i];
             i++;
         }

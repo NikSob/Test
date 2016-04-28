@@ -10,7 +10,7 @@ int main ()
 	FILE *first;
 	FILE *second;
 	first=fopen("Input.txt","r");
-	second=fopen("Output.txt","w");
+	second=fopen("results.txt","w");
 	fscanf(first,"%s",string);
 	words = (char**)malloc( sizeof(char*));
 	words[0] = (char*)malloc( sizeof(char) * strlen(string) + 1);
