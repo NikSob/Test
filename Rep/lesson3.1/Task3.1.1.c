@@ -54,7 +54,7 @@ int menu(void)
     printf("1 - Записать новый контакт\n"); 
     printf("2 - Удалить контакт\n");
     printf("3 - Вывести список контактов\n");
-    printf("4 - Потиск по записям\n");
+    printf("4 - Поиск по записям\n");
     printf("5 - Сохранить изменения в файл\n");
     printf("6 - Запросить информацию из файла\n");
     printf("0 - Выйти из телефонной книги\n\n\n");
@@ -71,6 +71,9 @@ int menu(void)
 void getting(void)
 {
     struct phonebook *helpfull;
+
+        char strlon1[255];
+        char strlon2[255];
         helpfull=(struct phonebook *)malloc( sizeof(struct phonebook));
         if(helpfull==0) 
         {
@@ -78,21 +81,43 @@ void getting(void)
             return;
         }
         printf("Введите имя:");
-        scanf("%s", helpfull->name);
+        do {
+            fgets(strlon1, 254, stdin);
+            if(strlen(strlon1)>30) 
+            printf("Слишком длинное имя!");
+        }while(strlen(strlon1)>30);
+        strlon1[strlen(strlon1)-1]=0;
+        strcpy(helpfull->name, strlon1);
         printf("Введите номер:");
-        getchar();
-        fgets(helpfull->number, 15, stdin);
+        do {
+            fgets(strlon2, 254, stdin);
+            if(strlen(strlon2)>15) 
+            printf("Слишком длинное имя!");
+        }while(strlen(strlon2)>15);
+        strlon2[strlen(strlon2)-1]=0;
+        strcpy(helpfull->number, strlon2);
         make_print_all(helpfull, &begin, &end);
+
+
+
+
 }
 
 
 void del_num(struct phonebook **begin, struct phonebook **end)
 {
     struct phonebook *helpfull;
-    char s[30];
+    char strlon3[30];
+    char find_to_del[30];
     printf("Введите имя:");
-    scanf("%s", s);
-    helpfull=search_of_name(s);
+    do {
+        fgets(strlon3, 254, stdin);
+        if(strlen(strlon3)>30) 
+        printf("Слишком длинное имя!");
+    }while(strlen(strlon3)>30);
+    strlon3[strlen(strlon3)-1]=0;
+    strcpy(find_to_del, strlon3);    
+    helpfull=search_of_name(find_to_del);
     if(helpfull) 
     {
         if(*begin==helpfull) 
@@ -132,7 +157,7 @@ void print_all(void)
         printf("%s: %s\n", helpfull->name, helpfull->number);
         printf("\n\n");
         helpfull=helpfull->next;
-    }while(helpfull!=end); 
+    }while(helpfull!= end);
     printf("%s: %s\n", helpfull->name, helpfull->number);
     printf("\n");
 }
@@ -140,13 +165,20 @@ void print_all(void)
 void search(void)
 {
     char word[30];
+    char strlon4[30];
     struct phonebook *helpfull;
     printf("Введите имя: \n");
-    scanf("%s", word);
+    do {
+            fgets(strlon4, 254, stdin);
+            if(strlen(strlon4)>30) 
+            printf("Слишком длинное имя!");
+        }while(strlen(strlon4)>30);
+        strlon4[strlen(strlon4)-1]=0;
+        strcpy(word, strlon4);
     helpfull=search_of_name(word);
     if(!helpfull) 
     {
-        printf("не найдено\n");
+        printf("Контакт не найден.\n");
     }
     else 
      {
@@ -193,13 +225,13 @@ void get_from_file()
             begin=helpfull;
         }
         begin=end=NULL;
-        printf("\nчтение из файла\n");
+        printf("Файл прочитан.");
         while(!feof(ptr)) 
         {
             helpfull =(struct phonebook *)malloc( sizeof(struct phonebook));
             if (!helpfull) 
             {
-                printf("нет свободной памяти\n");
+                printf("Нет свободной памяти!\n");
                 return;
             }
             if(fread(helpfull, sizeof(struct phonebook), 1, ptr)!= 1) break;
@@ -260,14 +292,17 @@ void make_print_all(struct phonebook *inpt, struct phonebook **begin, struct pho
     }
 }
 
+
 struct phonebook *search_of_name( char *word)
 {
     struct phonebook *helpfull;
     helpfull=begin;
-    do{
-        if(!strcmp(word, helpfull->name)) return helpfull;
+    while(helpfull)
+    {
+        if(!strcmp(word, helpfull->name)) 
+            return helpfull;
         helpfull=helpfull->next;
-    }while(!end) ;
+    } ;
     printf("Введено несуществующее имя\n");
     return NULL;
 }
