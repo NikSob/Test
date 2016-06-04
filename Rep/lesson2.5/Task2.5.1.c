@@ -1,4 +1,5 @@
 #include <stdio.h>
+#define SIZE 1000
 
 void change(char * a, char * b);
 void printing(char * a, int b);
@@ -6,14 +7,14 @@ void printing(char * a, int b);
 int main()
 {	
 	int i=0, g =0;
-	char massiv1[255], massiv2[255];
+	char massiv1[SIZE], massiv2[SIZE];
 	printf("Программа содержит функцию, для копирования строк.\n");
 	printf("Работу программы мы можем рассмотреть на примере.\n");
 	printf("Введите строку, которая впоследстии будет копированна:\n");
-	while((massiv1[i]=getchar()) != '\n' && i<256)
+	while((massiv1[i]=getchar()) != '\n' && i<SIZE+1)
 		i++;
 	printf("Введите строку, которая впоследстии будет заменена:\n");
-	while((massiv2[g]=getchar()) != '\n' && i<256)
+	while((massiv2[g]=getchar()) != '\n' && i<SIZE+1)
 		g++;
 	printf("Ваши строки до копирования:\n");
 	printing(massiv1, i);
@@ -28,7 +29,7 @@ int main()
 void change(char * a, char * b)
 {
 	int c;
-	for(c=0; c<255; c++)
+	for(c=0; c<SIZE; c++)
 	*(b+c) = *(a+c);
 }
 

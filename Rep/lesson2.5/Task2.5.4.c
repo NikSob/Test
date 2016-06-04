@@ -1,37 +1,93 @@
 #include <stdio.h>
 #define SIZE 255
 
+
+char punkt( char ch);
+
 int main(void)
 {
-	char srting[SIZE], local;
-	int i, first=0, second=0, third=0, fourth=0;
+	char srting[SIZE];
+	int i,k,n,z,result,ind = 0, next, number =0;
+	int num[SIZE] = {0,0,0};
 	printf("Введите строку для проверки баланса скобок:\n");
-	scanf("%s", srting);
-	for(i=0; i<SIZE; i++)
-	{
-		local=srting[i];
-		switch(local)
+	while((srting[number] = getchar()) && srting[number] != '\n')
+		number++;
+	for(i = 0; i<SIZE ; i++)
 		{
-		case '(' : first++;
-			continue;
-		case '[' : second++;
-			continue;
-		case '{' : third++;
-			continue;
-		case '<' : fourth++;
-			continue;
-		case ')' : first--;
-			continue;
-		case ']' : second--;
-			continue;
-		case '}' : third--;
-			continue;
-		case '>' : fourth--;
-			continue;
+			num[i] = punkt(srting[i]);
+		}
+	for(z = 0; z<SIZE; z++)
+	{
+	for (k = 0; k<SIZE ; k++)
+	{
+		
+		n = k;
+		
+		do
+		{
+			next = num[++n];
+			
+		}while(next == 'o');
+		if(((num[k] == '(') && (next == ')')) || ((num[k] == '{') && (next == '}')) || ((num[k] == '[') && (next == ']')) || ((num[k] == '<') && (next == '>')) || ((num[k] == '"') && (next == '"')) || ((num[k] == '\'') && (next == '\'')) || ((num[k] == '`') && (next == '`')))
+		{
+			num[k] = 'o';
+			num[n] = 'o';
 		}
 	}
-	if (first==0 && second ==0 && third == 0 && fourth ==0)
-		printf("Баланс скобок соблюдён.\n");
-	else printf("Баланс скобок не соблюдён.\n");
+	}
+	for(result = 0; result<number; result++)
+	{
+		if(num[result] != 'o' && num[result] != '\0')
+			ind = 1;
+	}
+	if (ind)
+		printf("Баланс скобок не соблюдён.\n");
+	else printf("Баланс скобок соблюдён.\n");
 	return 0;
+}
+
+
+char punkt( char ch)
+{
+
+	switch(ch)
+		{
+		case '(' : 
+			return '(';
+			break;
+		case '[' : 
+			return '[';
+			break;
+		case '{' :
+			return '{';
+			break;
+		case '<' : 
+			return '<';
+			break;
+		case '"' : 
+			return '"';
+			break;
+		case '\'' : 
+			return '\'';
+			break;
+		case '`' : 
+			return '`';
+			break;
+		case ')' : 
+			return ')';
+			break;
+		case ']' : 
+			return ']';
+			break;
+		case '}' :
+			return '}';
+			break;
+		case '>' : 
+			return '>';
+			break;
+		default:
+			return 'o';
+			break;
+		
+		}
 }

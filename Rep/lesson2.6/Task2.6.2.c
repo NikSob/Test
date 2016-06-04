@@ -1,15 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main () 
+int main (int argc, char *argv[]) 
 {
 	FILE *first;
    	FILE *second;
 	char letter;
 	char key[6]={'1', '0', '1', '1', '1', '0'};
 	int i=0;
-    first=fopen("begin.txt", "rb");
-    second=fopen("end.txt", "wb");
+    if (argc !=2) {
+        printf("Ошибка: %s\n", argv[0]);
+    }
+    if ((first=fopen(argv[1], "rb"))==NULL) {
+        printf("Невозможно открыть файл\n");
+        exit(1);
+    }
+    if ((second=fopen("output.txt", "wb"))==NULL) {
+        printf("Невозможно открыть файл\n");
+        exit(1);
+    } 
     while(feof(first) == 0) {
         fread(&letter, 1, 1, first);
         if(letter != '\n') 

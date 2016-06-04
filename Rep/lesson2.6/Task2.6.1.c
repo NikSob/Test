@@ -1,16 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-int main ()
+#include <ctype.h>
+
+int main (int argc, char *argv[])
 {	
-	int i, j, n = 1, *m, t = 0;
+	int i, j, n = 1, *m, t = 0, point=0, s_point =0;
 	char string[1024];
 	char **words;
 	char *place_for_word;
 	FILE *first;
 	FILE *second;
-	first=fopen("Input.txt","r");
-	second=fopen("results.txt","w");
+	if (argc !=2) 
+	{
+		printf("Неверное количество аргументов.\n");
+	}
+	if ((first=fopen(argv[1], "r"))==NULL) 
+	{
+		printf("Невозможно открыть файл.\n");
+		exit(1);
+	}
+	if((second=fopen("results.txt", "w"))==NULL) 
+	{
+		printf("Невозможно открыть файл.\n");
+		exit(1);
+	}
 	fscanf(first,"%s",string);
 	words = (char**)malloc( sizeof(char*));
 	words[0] = (char*)malloc( sizeof(char) * strlen(string) + 1);
@@ -19,9 +33,28 @@ int main ()
 	m[0] = 1;
 	while (fscanf(first,"%s",string) !=EOF)
 	{	
-		for(i = 0; i < n; ++i)
+		for(i = 0; i < n; i++)
 		{   
 
+			while(words[i][point] != '\0')
+			{
+				if(ispunct(words[i][point]))
+				{
+					words[i][point] = '\0';
+					break;
+				}
+				point++;
+			}
+			point = 0;
+			while(string[s_point] != '\0')
+			{
+				if(ispunct(string[s_point]))
+				{
+					string[s_point] = '\0';
+					break;
+				}
+				s_point ++;
+			}
 			if(strcmp(words[i],string) == 0)
 			{
 				m[i]++;
