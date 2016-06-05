@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #define SIZE 255
 
 void change(char * a, char * b);
@@ -30,17 +31,24 @@ int main()
 void change(char * a, char * b)
 {
 	int let = choise();
-	int c,j;
+	int c=0,j;
 	if (let == 'i')
 	{
-		for(c=0, j=SIZE-1; c<SIZE; c++, j--)
-		*(b+c) = *(a+j);
+		j = strlen(a)-1;
+		while(*(a+c)!='\0')
+		{
+			*(b+c) = *(a+j);
+			c++;
+			j--;
+		}
 	}
 	else if(let == 'c')
 	{
-
-	for(c=0; c<SIZE; c++)
-	*(b+c) = *(a+c);
+		while(*(a+c)!='\0')
+			{
+				*(b+c) = *(a+c);
+				c++;
+	}
 
 	}
 }

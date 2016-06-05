@@ -28,9 +28,12 @@ int main()
 
 void change(char * a, char * b)
 {
-	int c;
-	for(c=0; c<SIZE; c++)
-	*(b+c) = *(a+c);
+	int c=0;
+	while(*(a+c)!='\0')
+	{
+		*(b+c) = *(a+c);
+		c++;
+	}
 }
 
 void printing(char * a, int b)
