@@ -32,6 +32,6 @@ int main ()
 		det_with_free = det_with_change(g, m , massiv, massiv_free);
 		printf("x%d = %g;\n", g+1, det_with_free/determinant);
 	}
-	printf("Функция была вызвана %d раз(-а).\n", det_count());
+	printf("Функция была вызвана %d раз(-а).\n", det_count()-1);
 	return 0;
 }
