@@ -4,7 +4,8 @@
 
 float det( int m, float massiv[m][m]);
 float det_with_change (int b, int m, float massiv[m][m], float massiv_free[m]);
-int coun = 0;
+int det_count();
+
 
 int main () 
 {
@@ -31,6 +32,6 @@ int main ()
 		det_with_free = det_with_change(g, m , massiv, massiv_free);
 		printf("x%d = %g;\n", g+1, det_with_free/determinant);
 	}
-	printf("Функция была вызвана %d раз(-а).\n", coun);
+	printf("Функция была вызвана %d раз(-а).\n", det_count());
 	return 0;
 }

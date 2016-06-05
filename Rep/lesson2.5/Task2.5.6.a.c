@@ -1,16 +1,15 @@
-#include <stdio.h>
+#include <stdio.h>   //компилировать вместе с программой Task2.5.6.c
 #include <assert.h>
 
 float det( int m, float massiv[m][m]);
 float det_with_change (int b, int m, float massiv[m][m], float massiv_free[m]);
+int det_count();
 
 float det( int m, float massiv[m][m]) 
 {
-	extern int coun ;
-	coun++;
 		float mnr[m-1][m-1], new=0;
 		int i, a, b,n;
-		
+		det_count();
 		while(m!=1)
 		{
 			for(b=0; b<m; b++)  
@@ -41,8 +40,7 @@ float det( int m, float massiv[m][m])
 
 float det_with_change (int b, int m, float massiv[m][m], float massiv_free[m])
 {
-	extern int coun ;
-	coun++;
+		det_count();
 		float addition[m][m],back;
 		int i, g;
 		for(i=0; i<m ; i++)  
@@ -59,4 +57,11 @@ float det_with_change (int b, int m, float massiv[m][m], float massiv_free[m])
 		}
 		back=det(m, addition);
 		return back;
+	}
+
+	int det_count()
+	{
+		static int count =0;
+		count++;
+		return count;
 	}
